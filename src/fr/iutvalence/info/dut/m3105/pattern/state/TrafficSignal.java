@@ -1,9 +1,10 @@
 package fr.iutvalence.info.dut.m3105.pattern.state;
 
 
-public class TrafficSignal extends Thread implements TrafficSignalContext, TrafficSignalUserInterface
+public class TrafficSignal extends Thread implements TrafficSignalContext, TrafficSignalUserInterface, TrafficSignalButtonObserver
 {
 	private TrafficSignalState state;
+	private TrafficSignalColorChangeObserver TSCCO;
 
 	@Override
 	public void setTrafficSignalState(TrafficSignalState state)
@@ -17,6 +18,7 @@ public class TrafficSignal extends Thread implements TrafficSignalContext, Traff
 	{
 		this.state.buttonPressed();
 	}
+	
 	
 	public void run()
 	{
@@ -33,6 +35,27 @@ public class TrafficSignal extends Thread implements TrafficSignalContext, Traff
 				break;
 			}
 		}
+	}
+	
+	public void notifyNewChangeOfState(TrafficSignalEvent TSE)
+	{
+		
+	}
+	
+	public void registerObserver(TrafficSignalColorChangeObserver TSCCO)
+	{
+		this.TSCCO=TSCCO;
+	}
+	
+	public void unregisterObserver(TrafficSignalColorChangeObserver TSCCO)
+	{
+		this.TSCCO=null;
+	}
+
+	@Override
+	public void notifyButtonPressed() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
